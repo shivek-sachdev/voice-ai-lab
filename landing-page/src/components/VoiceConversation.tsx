@@ -220,6 +220,9 @@ function humanizeError(error: unknown): string {
   if (/permission|denied|notallowed/i.test(raw)) {
     return "Microphone access was blocked. Please allow it and try again.";
   }
+  if (/device not found|notfound|no.*(microphone|device)/i.test(raw)) {
+    return "No microphone was found. Please connect one and try again.";
+  }
   if (/network|failed to fetch|signed/i.test(raw)) {
     return "Couldn't connect to the voice service. Please try again.";
   }

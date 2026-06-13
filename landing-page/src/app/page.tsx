@@ -7,6 +7,7 @@ import { VoiceDemo } from "@/components/VoiceDemo";
 
 export default function Home() {
   const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
+  const phoneEnabled = process.env.NEXT_PUBLIC_ELEVENLABS_PHONE_ENABLED === "true";
 
   return (
     <>
@@ -15,7 +16,7 @@ export default function Home() {
         <Hero />
         <Features />
         <VoiceDemo agentId={agentId} />
-        <PhoneCallback />
+        <PhoneCallback enabled={phoneEnabled} />
       </main>
       <Footer />
     </>
