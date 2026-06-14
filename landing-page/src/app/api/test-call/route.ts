@@ -19,13 +19,17 @@ export async function POST(request: NextRequest) {
   const agentPhoneNumberId = process.env.ELEVENLABS_AGENT_PHONE_NUMBER_ID;
 
   if (!apiKey || !agentId || !agentPhoneNumberId) {
-    return NextResponse.json(
-      {
-        error:
-          "Outbound calling is not configured. Set ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID, and ELEVENLABS_AGENT_PHONE_NUMBER_ID.",
-      },
-      { status: 503 },
-    );
+    const missing = [
+      !apiKey && "ELEVENLABS_API_KEY",
+      !agentId && "ELEVENLABS_AGENT_ID",
+      !agentPhoneNumberId && "ELEVENLABS_AGENT_PHONE_NUMBER_ID",
+    ].filter(Boolean) as string[];
+
+    const error =
+      missing.length === 1 && missing[0] === "ELEVENLABS_AGENT_PHONE_NUMBER_ID"
+        ? "No phone number is linked yet. Link a Twilio number in the ElevenLabs dashboard and set ELEVENLABS_AGENT_PHONE_NUMBER_ID."
+        : `Outbound calling is not configured. Missing: ${missing.join(", ")}.`;
+    return NextResponse.json({ error }, { status: 503 });
   }
 
   let payload: unknown;
