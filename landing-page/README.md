@@ -60,10 +60,28 @@ To enable it:
 
 You can provision the outbound agent and inspect phone numbers from your editor
 using the official
-[ElevenLabs MCP server](https://github.com/elevenlabs/elevenlabs-mcp). Configure
-it with your `ELEVENLABS_API_KEY`, then use its agent tools to create the agent,
-set its system prompt and `first_message`, and read back the `agent_id` and
-linked `agent_phone_number_id` to drop into `.env.local`.
+[ElevenLabs MCP server](https://github.com/elevenlabs/elevenlabs-mcp).
+
+This repo ships a ready-to-use config at [`.cursor/mcp.json`](../.cursor/mcp.json)
+(repo root) that launches the server via `uvx elevenlabs-mcp`. It reads your key
+from the `ELEVENLABS_API_KEY` environment variable, so **no secret is committed
+to git**. Prerequisites:
+
+- [`uv`](https://github.com/astral-sh/uv) installed (`uvx` must be on `PATH`).
+- `ELEVENLABS_API_KEY` available to the editor:
+  - **Cursor Desktop:** set it in your shell/login environment, or replace the
+    `${ELEVENLABS_API_KEY}` placeholder in your local MCP config with the key.
+  - **Cursor Cloud Agents:** add `ELEVENLABS_API_KEY` under
+    **Dashboard → Cloud Agents → Secrets** so it is injected into the agent VM.
+
+Once connected, ask the agent (using the MCP tools) to create the outbound
+agent, set its system prompt and `first_message`, then read back the `agent_id`
+and linked `agent_phone_number_id` to drop into `.env.local`.
+
+> **Note:** The MCP server is a *client-side editor tool*, not part of this web
+> app's runtime. The landing page's "Call me" button always uses the
+> server-side `/api/test-call` route and the REST API above — it does not depend
+> on the MCP.
 
 ## How the test call works
 
