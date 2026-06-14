@@ -24,12 +24,22 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## ElevenLabs setup
 
-### Browser voice widget
+### Browser voice conversation (the "Talk to the agent" demo)
+
+The `Try the voice agent now` section runs an in-page conversation with the
+[`@elevenlabs/react`](https://www.npmjs.com/package/@elevenlabs/react) SDK. The
+browser never sees your API key: `/api/signed-url` exchanges the server-side
+`ELEVENLABS_API_KEY` for a short-lived signed URL, so the agent can stay
+**private** (no need to disable authentication).
 
 1. Create an agent at [ElevenLabs Conversational AI](https://elevenlabs.io/app/conversational-ai)
-2. In **Advanced** settings, disable authentication (required for the embed widget)
-3. In **Security**, add your domain to the allowlist (e.g. `localhost` for dev)
-4. Copy your agent ID into `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` in `.env.local`
+2. Copy its agent ID into `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` in `.env.local`
+3. Set `ELEVENLABS_API_KEY` in `.env.local` (used to mint the signed URL)
+4. `npm run dev`, open the page, click **Start conversation**, and allow the mic
+
+> If no `ELEVENLABS_API_KEY` is set, `/api/signed-url` falls back to handing the
+> client the agent ID directly — which only works if the agent is public
+> (authentication disabled) and your domain is allowlisted in the dashboard.
 
 ### Outbound telephony (the "Call me" test call)
 
