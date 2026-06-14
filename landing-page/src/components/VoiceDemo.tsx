@@ -1,4 +1,4 @@
-import { ElevenLabsWidget } from "./ElevenLabsWidget";
+import { VoiceConversation } from "./VoiceConversation";
 
 type VoiceDemoProps = {
   agentId?: string;
@@ -42,7 +42,7 @@ export function VoiceDemo({ agentId }: VoiceDemoProps) {
               className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent/10 to-accent-soft/40 blur-2xl"
             />
             <div className="relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <ElevenLabsWidget agentId={agentId} variant="expanded" />
+              <VoiceConversation configured={Boolean(agentId)} />
             </div>
           </div>
         </div>
